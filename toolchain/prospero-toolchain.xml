@@ -18,7 +18,7 @@
         <flag value="-fpic"/>
         <flag value="-fPIC"/>
         <flag value='-D__ORBIS__'/>
-		<flag value='-D_WCHAR_T'/>
+	<flag value='-D_WCHAR_T'/>
         <!-- <flag value='-I.'/> -->
         <flag value='-w'/>
         <flag value="-Wno-overflow" />
@@ -43,10 +43,6 @@
         <exe name="${CXX}" if="CXX" />
         <fromfile value="" if="GCC_OLD" />
         <flag value="-debug" if="debug"/>
-        <flag value="-lkernel" />
-        <flag value="-lkernel_sys" />
-		<flag value="-lSceSystemService" />
-		<flag value="-lSceUserService" />
         <lib name="-ldl"/>
         <ext value=""/>
         <outflag value="-o "/>
