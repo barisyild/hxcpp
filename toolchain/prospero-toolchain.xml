@@ -34,6 +34,11 @@
         <ext value=".o"/>
     </compiler>
 
+    <stripper id="strip" exe="/opt/ps5-payload-sdk/bin/prospero-strip" unless="nostrip">
+	<exe name="/opt/ps5-payload-sdk/bin/prospero-strip"/>
+	<exe name="${EXEPREFIX}-strip" if="EXEPREFIX" />
+    </stripper>
+
     <linker id="exe" exe="/opt/ps5-payload-sdk/bin/prospero-lld">
         <exe name="${CXX}" if="CXX" />
         <fromfile value="" if="GCC_OLD" />
