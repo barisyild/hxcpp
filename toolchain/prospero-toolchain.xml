@@ -34,8 +34,8 @@
         <ext value=".o"/>
     </compiler>
 
-    <stripper id="strip" exe="/opt/ps5-payload-sdk/bin/prospero-strip" unless="nostrip">
-	<exe name="/opt/ps5-payload-sdk/bin/prospero-strip"/>
+    <stripper id="strip" exe="/opt/ps5-payload-sdk/bin/llvm-strip" unless="nostrip">
+	<exe name="/opt/ps5-payload-sdk/bin/llvm-strip"/>
 	<exe name="${EXEPREFIX}-strip" if="EXEPREFIX" />
     </stripper>
 
