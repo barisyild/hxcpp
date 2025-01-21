@@ -2,6 +2,7 @@
     <!-- PROSPERO TOOLS -->
     <set name="CXX" value="${PS5_PAYLOAD_SDK}/bin/prospero-clang++" />
     <set name="HXCPP_CPP11" value="1" unless="HXCPP_NO_CPP11" />
+    <set name="HXCPP_M64" value="1" />
 
     <include name="toolchain/gcc-toolchain.xml"/>
 
