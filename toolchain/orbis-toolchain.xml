@@ -1,0 +1,50 @@
+<xml>
+    <!-- ORBIS TOOLS -->
+    <set name="CXX" value="${PS4_PAYLOAD_SDK}/bin/orbis-clang++" />
+    <set name="HXCPP_CPP11" value="1" unless="HXCPP_NO_CPP11" />
+    <set name="HXCPP_M64" value="1" />
+
+    <include name="toolchain/gcc-toolchain.xml"/>
+
+    <compiler id="orbis" exe="${CXX}">
+        <exe name="${CXX}" if="CXX" />
+        <flag value="-c"/>
+        <flag value="-fvisibility=hidden"/>
+        <cppflag value="-frtti"/>
+        <cppflag value="-std=c++11" if="HXCPP_CPP11" />
+        <cppflag value="-std=c++17" if="HXCPP_CPP17"/>
+        <flag value="-g" if="debug"/>
+        <!-- <flag value="-O2" unless="debug"/> --> <!-- Do not use because orbis is buggy -->
+        <flag value="-fpic"/>
+        <flag value="-fPIC"/>
+        <flag value='-D__ORBIS__'/>
+	<flag value='-D_WCHAR_T'/>
+        <!-- <flag value='-I.'/> -->
+        <flag value='-w'/>
+        <flag value="-Wno-overflow" />
+        <cppflag value="-Wno-invalid-offsetof" />
+        <!-- <flag value="-DHX_LINUX"/> -->
+        <flag value="-DHXCPP_MULTI_THREADED" if="HXCPP_MULTI_THREADED"/>
+        <flag value="-DHXCPP_BIG_ENDIAN" if="HXCPP_BIG_ENDIAN"/>
+        <flag value="-DHXCPP_THREAD_INFO_PTHREAD" />
+        <include name="toolchain/common-defines.xml" />
+        <flag value="-I${HXCPP}/include"/>
+        <objdir value="obj/orbis${OBJEXT}/"/>
+        <outflag value="-o"/>
+        <ext value=".o"/>
+    </compiler>
+
+    <stripper id="strip" exe="/opt/ps4-payload-sdk/bin/llvm-strip" unless="nostrip">
+	<exe name="/opt/ps4-payload-sdk/bin/llvm-strip"/>
+	<exe name="${EXEPREFIX}-strip" if="EXEPREFIX" />
+    </stripper>
+
+    <linker id="exe" exe="/opt/ps4-payload-sdk/bin/orbis-lld">
+        <exe name="${CXX}" if="CXX" />
+        <fromfile value="" if="GCC_OLD" />
+        <flag value="-debug" if="debug"/>
+        <lib name="-ldl"/>
+        <ext value=""/>
+        <outflag value="-o "/>
+    </linker>
+</xml>
