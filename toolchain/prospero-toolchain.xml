@@ -18,6 +18,7 @@
         <flag value="-fpic"/>
         <flag value="-fPIC"/>
         <flag value='-D__ORBIS__'/>
+        <flag value="-D__PROSPERO__" />
 	<flag value='-D_WCHAR_T'/>
         <!-- <flag value='-I.'/> -->
         <flag value='-w'/>
