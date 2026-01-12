@@ -30,7 +30,7 @@
    #include <limits.h>
    #ifndef ANDROID
       #include <locale.h>
-      #if !defined(BLACKBERRY) && !defined(EPPC) && !defined(GCW0) && !defined(__GLIBC__)
+      #if !defined(BLACKBERRY) && !defined(EPPC) && !defined(GCW0) && !defined(__GLIBC__) && !defined(__ORBIS__)
          #include <xlocale.h>
       #endif
    #endif
@@ -274,6 +274,10 @@ String _hx_std_sys_string()
    return HX_CSTRING("Emscripten");
 #elif defined(EPPC)
    return HX_CSTRING("EPPC");
+#elif defined(__PROSPERO__)
+   return HX_CSTRING("Prospero");
+#elif defined(__ORBIS__)
+   return HX_CSTRING("Orbis");
 #else
 #error Unknow system string
 #endif

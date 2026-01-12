@@ -130,7 +130,7 @@ static int getrandom_wrapper( void *buf, size_t buflen, unsigned int flags )
  *
  * Documentation: https://netbsd.gw.com/cgi-bin/man-cgi?sysctl+7
  */
-#if (defined(__FreeBSD__) || defined(__NetBSD__)) && !defined(HAVE_GETRANDOM)
+#if (defined(__FreeBSD__) || defined(__NetBSD__)) && !defined(HAVE_GETRANDOM) && !defined(__ORBIS__)
 #include <sys/param.h>
 #include <sys/sysctl.h>
 #if defined(KERN_ARND)

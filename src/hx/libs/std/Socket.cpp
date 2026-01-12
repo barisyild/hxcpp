@@ -59,6 +59,15 @@ typedef socklen_t SocketLen;
 #   define MSG_NOSIGNAL 0
 #endif
 
+#ifdef __ORBIS__
+   #undef MSG_NOSIGNAL
+   #define MSG_NOSIGNAL 0
+#endif
+
+
+#if defined(__ORBIS__) && !defined(SO_NOSIGPIPE)
+	#define	SO_NOSIGPIPE	0x00000800	/* no SIGPIPE from EPIPE */
+#endif
 
 
 namespace
@@ -189,7 +198,7 @@ Dynamic _hx_std_socket_new( bool udp, bool ipv6 )
    if( s == INVALID_SOCKET )
       return null();
 
-   #ifdef NEKO_MAC
+   #if (defined(NEKO_MAC) || defined(__ORBIS__))
       int set = 1;
       setsockopt(s,SOL_SOCKET,SO_NOSIGPIPE,(void *)&set, sizeof(int));
    #endif

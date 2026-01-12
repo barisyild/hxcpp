@@ -1,24 +1,36 @@
 <xml>
     <!-- ORBIS TOOLS -->
-    <set name="CXX" value="${PS4_PAYLOAD_SDK}/bin/orbis-clang++" />
+    <set name="CXX" value="clang++" />
     <set name="HXCPP_CPP11" value="1" unless="HXCPP_NO_CPP11" />
     <set name="HXCPP_M64" value="1" />
+	<set name="nostrip" value="1" />
 
     <include name="toolchain/gcc-toolchain.xml"/>
 
     <compiler id="orbis" exe="${CXX}">
         <exe name="${CXX}" if="CXX" />
+		
+		<flag value="--target=x86_64-pc-freebsd12-elf"/>
+		<flag value="-isysroot"/>
+		<flag value="/opt/OpenOrbis/PS4Toolchain"/>
+		
+		<flag value="-isystem"/>
+		<flag value="/opt/OpenOrbis/PS4Toolchain/include"/>
+		
+		<flag value="-isystem"/>
+		<flag value="/opt/OpenOrbis/PS4Toolchain/include/c++/v1"/>
+		<cppflag value="-std=gnu++11" />
+		
         <flag value="-c"/>
-        <flag value="-fvisibility=hidden"/>
-        <cppflag value="-frtti"/>
-        <cppflag value="-std=c++11" if="HXCPP_CPP11" />
-        <cppflag value="-std=c++17" if="HXCPP_CPP17"/>
+        <!-- <flag value="-fvisibility=hidden"/> -->
+        <!-- <cppflag value="-frtti"/> -->
         <flag value="-g" if="debug"/>
         <!-- <flag value="-O2" unless="debug"/> --> <!-- Do not use because orbis is buggy -->
-        <flag value="-fpic"/>
-        <flag value="-fPIC"/>
+        <!-- <flag value="-fpic"/> -->
+		<flag value="-fPIC"/>
+		<flag value="-funwind-tables"/>
         <flag value='-D__ORBIS__'/>
-	<flag value='-D_WCHAR_T'/>
+		<!-- <flag value='-D_WCHAR_T'/> -->
         <!-- <flag value='-I.'/> -->
         <flag value='-w'/>
         <flag value="-Wno-overflow" />
@@ -27,6 +39,9 @@
         <flag value="-DHXCPP_MULTI_THREADED" if="HXCPP_MULTI_THREADED"/>
         <flag value="-DHXCPP_BIG_ENDIAN" if="HXCPP_BIG_ENDIAN"/>
         <flag value="-DHXCPP_THREAD_INFO_PTHREAD" />
+		<flag value="-DSQLITE_ENABLE_MEMORY_MANAGEMENT" />
+		<flag value="-DSQLITE_OS_OTHER=1" />
+		<flag value="-DSQLITE_OMIT_WAL" />
         <include name="toolchain/common-defines.xml" />
         <flag value="-I${HXCPP}/include"/>
         <objdir value="obj/orbis${OBJEXT}/"/>
@@ -34,17 +49,28 @@
         <ext value=".o"/>
     </compiler>
 
-    <stripper id="strip" exe="/opt/ps4-payload-sdk/bin/llvm-strip" unless="nostrip">
-	<exe name="/opt/ps4-payload-sdk/bin/llvm-strip"/>
+    <stripper id="strip" exe="/opt/OpenOrbis/PS4Toolchain/bin/llvm-strip" unless="nostrip">
+	<exe name="/opt/OpenOrbis/PS4Toolchain/bin/llvm-strip"/>
 	<exe name="${EXEPREFIX}-strip" if="EXEPREFIX" />
     </stripper>
 
-    <linker id="exe" exe="/opt/ps4-payload-sdk/bin/orbis-lld">
-        <exe name="${CXX}" if="CXX" />
-        <fromfile value="" if="GCC_OLD" />
-        <flag value="-debug" if="debug"/>
-        <lib name="-ldl"/>
-        <ext value=""/>
-        <outflag value="-o "/>
-    </linker>
+    <linker id="exe" exe="ld.lld">
+		<exe name="ld.lld" if="CXX" />
+		<fromfile value="" if="GCC_OLD" />
+		<flag value="-lc" />
+		<flag value="-lc++" />
+		<flag value="-lkernel" />
+		<flag value="-lkernel_sys" />
+		<flag value="-m" />
+		<flag value="elf_x86_64" />
+		<flag value="-pie" />
+		<flag value="--script" />
+		<flag value="${OO_PS4_TOOLCHAIN}/link.x" />
+		<flag value="--eh-frame-hdr" />
+		<flag value="-L${OO_PS4_TOOLCHAIN}/lib" />
+		<flag value="${OO_PS4_TOOLCHAIN}/lib/crt1.o" />
+		<lib name="-ldl" />
+		<ext value="" />
+		<outflag value="-o" />
+	</linker>
 </xml>
