@@ -56,7 +56,7 @@
     <linker id="exe" exe="ld.lld">
 		<exe name="ld.lld" if="CXX" />
 		<fromfile value="" if="GCC_OLD" />
-		<flag value="-rdynamic"/>
+		<flag value="--export-dynamic"/>
 		<flag value="-lc" />
 		<flag value="-lc++" />
 		<flag value="-lkernel" />
