@@ -38,9 +38,6 @@
         <flag value="-DHXCPP_MULTI_THREADED" if="HXCPP_MULTI_THREADED"/>
         <flag value="-DHXCPP_BIG_ENDIAN" if="HXCPP_BIG_ENDIAN"/>
         <flag value="-DHXCPP_THREAD_INFO_PTHREAD" />
-		<flag value="-DSQLITE_ENABLE_MEMORY_MANAGEMENT" />
-		<flag value="-DSQLITE_OS_OTHER=1" />
-		<flag value="-DSQLITE_OMIT_WAL" />
         <include name="toolchain/common-defines.xml" />
         <flag value="-I${HXCPP}/include"/>
         <objdir value="obj/orbis${OBJEXT}/"/>
