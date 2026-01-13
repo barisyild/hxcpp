@@ -71,7 +71,7 @@
    <target id="regexp"/>
    <target id="zlib"/>
    <target id="mysql"/>
-   <target id="sqlite" unless="winrt"/><!-- TODO -->
+   <target id="sqlite" unless="winrt||orbis"/><!-- TODO -->
    <section if="static_link">
       <target id="msvccompat" if="windows" unless="mingw||MSVC19" />
       <target id="linuxcompat" if="linux" />
